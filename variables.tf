@@ -1,10 +1,35 @@
-variable "vpc_cidr_block" {
-  description = "CIDR block for the VPC"
+variable "aws_region" {
+  description = "AWS region to deploy resources"
   type        = string
-  default     = "10.0.0.0/16"
+  default     = "us-east-1"
 }
 
 variable "environment" {
-  description = "The environment to deploy (dev, prod, staging)"
+  description = "environment"
   type        = string
+  default     = "dev"
+}
+
+variable "vpc_cidr_block" {
+  description = "vpc_cidr_block"
+  type        = string
+  default     = "10.1.0.0/16"
+}
+
+variable "subnet_cidr_block" {
+  description = "subnet_cidr_block"
+  type        = string
+  default     = "10.1.1.0/24"
+}
+
+variable "frontend_app" {
+  description = "Frontend APP"
+  type        = string
+  default     = "CoilFront"
+}
+
+variable "backend_app" {
+  description = "Backend API name"
+  type        = string
+  default     = "CoilAPI"
 }
