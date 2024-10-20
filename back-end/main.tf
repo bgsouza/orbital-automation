@@ -1,5 +1,6 @@
 provider "aws" {
   region = var.aws_region
+  profile = var.profile
 }
 
 resource "aws_elastic_beanstalk_application" "backend_app" {

@@ -10,6 +10,12 @@ variable "environment" {
   default     = "dev"
 }
 
+variable "profile" {
+  description = "Profile AWS Terraform"
+  type        = string
+  default     = "orbital"
+}
+
 variable "vpc_cidr_block" {
   description = "vpc_cidr_block"
   type        = string
