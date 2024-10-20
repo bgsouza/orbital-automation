@@ -5,6 +5,10 @@ provider "aws" {
 
 resource "aws_s3_bucket" "frontend_bucket" {
   bucket = "${var.frontend_app}-bucket-${terraform.workspace}"
+}
+
+resource "aws_s3_bucket_acl" "frontend_bucket_acl" {
+  bucket = aws_s3_bucket.frontend_bucket.id  # Refere-se ao bucket criado
   acl    = "public-read"
 }
 
@@ -28,9 +32,10 @@ resource "aws_cloudfront_distribution" "frontend_distribution" {
   viewer_certificate {
     cloudfront_default_certificate = true
   }
-}
 
-# Output para a URL do CloudFront
-output "cloudfront_url" {
-  value = aws_cloudfront_distribution.frontend_distribution.domain_name
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"  # Pode ser "whitelist", "blacklist" ou "none"
+    }
+  }
 }

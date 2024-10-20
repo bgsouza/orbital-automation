@@ -15,10 +15,10 @@ resource "aws_elastic_beanstalk_environment" "backend_env" {
 
 resource "aws_s3_bucket" "backend_bucket" {
   bucket = "${var.backend_app}-source"
+}
+
+resource "aws_s3_bucket_acl" "backend_bucket_acl" {
+  bucket = aws_s3_bucket.backend_bucket.id  # Refere-se ao bucket criado
   acl    = "private"
 }
 
-# Output para a URL do Elastic Beanstalk
-output "elastic_beanstalk_url" {
-  value = aws_elastic_beanstalk_environment.backend_env.endpoint_url
-}
