@@ -31,11 +31,11 @@ variable "subnet_cidr_block" {
 variable "frontend_app" {
   description = "Frontend APP"
   type        = string
-  default     = "CoilFront"
+  default     = "coilfront"
 }
 
 variable "backend_app" {
   description = "Backend API name"
   type        = string
-  default     = "CoilAPI"
+  default     = "coilapi"
 }
