@@ -153,3 +153,32 @@ resource "aws_elastic_beanstalk_environment" "backend_env" {
 resource "aws_s3_bucket" "backend_bucket" {
   bucket = "${var.backend_app}-source"
 }
+
+resource "aws_s3_bucket_policy" "backend_bucket_policy" {
+  bucket = aws_s3_bucket.backend_bucket.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = [
+            "elasticbeanstalk.amazonaws.com",
+            "elasticloadbalancing.amazonaws.com"
+          ]
+        }
+        Action = [
+          "s3:GetObject",
+          "s3:PutObject"
+        ]
+        Resource = "${aws_s3_bucket.backend_bucket.arn}/*"
+        Condition = {
+          StringEquals = {
+            "aws:SourceAccount" = "796973515412"
+          }
+        }
+      }
+    ]
+  })
+}
