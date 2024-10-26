@@ -161,7 +161,8 @@ resource "aws_s3_bucket_policy" "backend_bucket_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect = "Allow"
+        Sid       = "AllowElasticBeanstalkServiceAccess"
+        Effect    = "Allow"
         Principal = {
           Service = [
             "elasticbeanstalk.amazonaws.com",
@@ -170,9 +171,13 @@ resource "aws_s3_bucket_policy" "backend_bucket_policy" {
         }
         Action = [
           "s3:GetObject",
-          "s3:PutObject"
+          "s3:PutObject",
+          "s3:ListBucket"
         ]
-        Resource = "${aws_s3_bucket.backend_bucket.arn}/*"
+        Resource = [
+          "${aws_s3_bucket.backend_bucket.arn}",
+          "${aws_s3_bucket.backend_bucket.arn}/*"
+        ]
         Condition = {
           StringEquals = {
             "aws:SourceAccount" = "796973515412"
@@ -182,3 +187,4 @@ resource "aws_s3_bucket_policy" "backend_bucket_policy" {
     ]
   })
 }
+
